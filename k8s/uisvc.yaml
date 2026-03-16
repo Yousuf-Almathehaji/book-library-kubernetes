@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uisvc
+spec:
+  type: LoadBalancer
+  selector:
+    app: ui
+  ports:
+  - nodePort: 32000
+    port: 2000
+    targetPort: 80

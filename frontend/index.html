@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Book Library</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#f4f6f9;
+margin:0;
+}
+
+header{
+background:#4a6cf7;
+color:white;
+padding:20px;
+text-align:center;
+}
+
+.container{
+width:90%;
+max-width:900px;
+margin:auto;
+margin-top:40px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 3px 8px rgba(0,0,0,0.1);
+margin-bottom:30px;
+}
+
+input,textarea{
+width:100%;
+padding:10px;
+margin-top:10px;
+margin-bottom:15px;
+border-radius:5px;
+border:1px solid #ccc;
+}
+
+button{
+background:#4a6cf7;
+color:white;
+border:none;
+padding:10px 15px;
+border-radius:5px;
+cursor:pointer;
+margin-right:5px;
+}
+
+button:hover{
+background:#344de0;
+}
+
+.deleteBtn{
+background:#e74c3c;
+}
+
+.deleteBtn:hover{
+background:#c0392b;
+}
+
+.editBtn{
+background:#27ae60;
+}
+
+.editBtn:hover{
+background:#1e8449;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:10px;
+border-bottom:1px solid #eee;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>📚 Book Library</h1>
+</header>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Add / Edit Book</h2>
+
+<input id="title" placeholder="Book title">
+
+<input id="author" placeholder="Author">
+
+<textarea id="description" placeholder="Description"></textarea>
+
+<button onclick="saveBook()" id="saveBtn">Add Book</button>
+
+</div>
+
+<div class="card">
+
+<h2>Books</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Title</th>
+<th>Author</th>
+<th>Description</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="books"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<script>
+
+let editId=null
+
+
+/* LOAD BOOKS */
+
+async function loadBooks(){
+
+const res=await fetch("/api/books")
+
+const data=await res.json()
+
+const table=document.getElementById("books")
+
+table.innerHTML=""
+
+data.forEach(book=>{
+
+table.innerHTML+=`
+<tr>
+<td>${book.title}</td>
+<td>${book.author}</td>
+<td>${book.description}</td>
+<td>
+<button class="editBtn" onclick="editBook(${book.id},'${book.title}','${book.author}','${book.description}')">Edit</button>
+<button class="deleteBtn" onclick="deleteBook(${book.id})">Delete</button>
+</td>
+</tr>
+`
+
+})
+
+}
+
+
+/* SAVE OR UPDATE BOOK */
+
+async function saveBook(){
+
+const title=document.getElementById("title").value
+const author=document.getElementById("author").value
+const description=document.getElementById("description").value
+
+
+if(editId){
+
+await fetch("/api/books/"+editId,{
+
+method:"PUT",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+title,
+author,
+description
+})
+
+})
+
+editId=null
+document.getElementById("saveBtn").innerText="Add Book"
+
+}else{
+
+await fetch("/api/books",{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+title,
+author,
+description
+})
+
+})
+
+}
+
+
+/* CLEAR INPUT */
+
+document.getElementById("title").value=""
+document.getElementById("author").value=""
+document.getElementById("description").value=""
+
+loadBooks()
+
+}
+
+
+/* EDIT BOOK */
+
+function editBook(id,title,author,description){
+
+editId=id
+
+document.getElementById("title").value=title
+document.getElementById("author").value=author
+document.getElementById("description").value=description
+
+document.getElementById("saveBtn").innerText="Update Book"
+
+}
+
+
+/* DELETE BOOK */
+
+async function deleteBook(id){
+
+await fetch("/api/books/"+id,{
+method:"DELETE"
+})
+
+loadBooks()
+
+}
+
+
+loadBooks()
+
+</script>
+
+</body>
+
+</html>
+

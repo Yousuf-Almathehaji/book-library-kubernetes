@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postshare
+data:
+  db_ip: postsvc
+  api_ip: http://apisvc:3000

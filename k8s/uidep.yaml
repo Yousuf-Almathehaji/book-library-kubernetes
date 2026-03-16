@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uidep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ui
+  template:
+    metadata:
+      labels:
+        app: ui
+    spec:
+      containers:
+      - name: uidep
+        image: yousufabdulilah/nginxui:v4
+          
+        env:
+          - name: API_URL
+            valueFrom:
+              configMapKeyRef:
+                key: api_ip
+                name: postshare
+        ports:
+        - containerPort: 80

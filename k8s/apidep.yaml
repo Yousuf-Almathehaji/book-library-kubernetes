@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apidep
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: apidep
+        image: yousufabdulilah/expapi:v4
+        env:
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                key: password
+                name: postdb
+          - name: DB_HOST
+            valueFrom:
+              configMapKeyRef:
+                key: db_ip
+                name: postshare
+        
+        ports:
+        - containerPort: 3000
