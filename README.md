@@ -133,9 +133,7 @@ kubectl get svc
 
 # 📸 Application Screenshot
 
-Add a screenshot of the running application.
 
-Example:
 
 ```
 screenshots/app.png
@@ -144,7 +142,7 @@ screenshots/app.png
 Markdown:
 
 ```
-![Application Screenshot](screenshots/app.png)
+![Application Screenshot](screenshots/app.PNG)
 ```
 
 ---
