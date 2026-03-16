@@ -32,4 +32,4 @@ VALUES ('The Clean Coder', 'Robert C. Martin', 'A Code of Conduct for Profession
 
 
 INSERT INTO reviews (book_id, user_id, rating, comment) 
-VALUES (1, 1, 5, 'كتاب رائع جداً ومفيد لكل مبرمج!');
+VALUES (1, 1, 5, 'good book');
