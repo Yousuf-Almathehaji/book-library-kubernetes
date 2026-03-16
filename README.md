@@ -135,15 +135,9 @@ kubectl get svc
 
 
 
-```
-screenshots/app.png
-```
 
-Markdown:
-
-```
 ![Application Screenshot](screenshots/app.PNG)
-```
+
 
 ---
 
