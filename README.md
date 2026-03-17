@@ -136,7 +136,7 @@ kubectl get svc
 
 
 
-![Application Screenshot](screenshots/word.jpg)
+![Application Screenshot](screenshots/app.PNG)
 
 
 ---
