@@ -136,7 +136,7 @@ kubectl get svc
 
 
 
-![Application Screenshot](screenshots/word.jpg)
+![image alt](https://github.com/Yousuf-Almathehaji/book-library-kubernetes/blob/32c318f40188418b95c85817c7cfd822e5d98533/app.PNG)
 
 
 ---
